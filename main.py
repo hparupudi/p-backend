@@ -116,5 +116,4 @@ def login():
     return jsonify({"error": "invalid login credentials"}), 401
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True, port=8080)
