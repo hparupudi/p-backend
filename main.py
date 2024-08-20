@@ -5,7 +5,6 @@ from flask_cors import CORS, cross_origin
 from flask_session import Session
 import os
 
-
 from dotenv import load_dotenv
 from passlib.hash import pbkdf2_sha256
 import pymongo
@@ -70,11 +69,10 @@ prompt = ChatPromptTemplate.from_messages(
         ],
     )
 
-@app.route("/api/signup", methods=["POST"])
-@cross_origin(supports_credentials=True)
 
 #Allows users to create accounts, adds to db
-
+@app.route("/api/signup", methods=["POST"])
+@cross_origin(supports_credentials=True)
 def signup():
     session.permanent = True
     user = {
@@ -95,11 +93,10 @@ def signup():
 
     return jsonify(session["logged_in"]), 200
 
+
+#Checks if account exists and if password matches
 @app.route("/api/login", methods=["POST"])
-@cross_origin(supports_credentials=True)
-
-#Checks if account exists and if password matches 
-
+@cross_origin(supports_credentials=True) 
 def login():
     user = db.users.find_one({
         'email': request.form.get('email')
@@ -116,20 +113,19 @@ def login():
 
     return jsonify({"error": "invalid login credentials"}), 401
 
-@app.route("/api/logout", methods=["GET"])
-@cross_origin(supports_credentials=True)
 
 #Logs out user
-
+@app.route("/api/logout", methods=["GET"])
+@cross_origin(supports_credentials=True)
 def logout():
     session.pop("user", None)
     session["logged_in"] = False
     return jsonify(session["logged_in"]), 200
 
-@app.route("/api/recipes", methods=["GET", "POST"])
+
 
 #Fetches relevant documents from vector db for user's prompt, then generates recipe based on those documents
-
+@app.route("/api/recipes", methods=["GET", "POST"])
 def recipes():
     if request.method == "POST":
         user_prompt = request.get_json()
