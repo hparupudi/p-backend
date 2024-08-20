@@ -1,1 +1,1 @@
-Generates personalized recipes for users
+Generates personalized recipes to cater to users' dietary conditions and taste. Uses LLM trained on custom dataset of over 1000+ recipes to retrieve recipes from database and generate new recipes based on the recipe dataset.
